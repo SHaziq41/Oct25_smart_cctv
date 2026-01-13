@@ -20,7 +20,7 @@ The system monitors an environment using:
 - An **LED alert mechanism** for visual warning
 - An **ESP32-CAM** for live CCTV streaming
 
-IoT data is managed using **oneM2M (MÖBIUS)**, while **Node-RED** serves as the application layer to handle:
+IoT data is managed using **oneM2M (MOBIUS)**, while **Node-RED** serves as the application layer to handle:
 - User access requests
 - Admin approval / denial
 - Dashboard visualization
