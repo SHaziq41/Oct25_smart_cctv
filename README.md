@@ -37,7 +37,7 @@ CCTV access is **blocked by default** and only unlocked after **admin approval**
   - ESP32 + Ultrasonic Sensor + LED
   - ESP32-CAM (CCTV)
 - **Middleware**
-  - oneM2M platform (MÖBIUS)
+  - oneM2M platform (MOBIUS)
 - **Application Layer**
   - Node-RED Dashboard
 - **Testing Tool**
@@ -61,7 +61,7 @@ CCTV access is **blocked by default** and only unlocked after **admin approval**
 
 ---
 
-##  oneM2M (MÖBIUS) Usage
+##  oneM2M (MOBIUS) Usage
 
 MOBIUS is used as the **oneM2M Common Services Entity (CSE)**.
 
