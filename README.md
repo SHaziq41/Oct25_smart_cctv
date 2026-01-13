@@ -6,6 +6,11 @@ a smart CCTV project
 This project implements a **secure smart surveillance and monitoring system** using IoT devices, the **oneM2M standard (MÖBIUS)**, and **Node-RED**.  
 The system focuses on **access-controlled CCTV viewing**, **motion detection**, and **centralized IoT data management**.
 
+##  Team Membera
+1. Shaiful Haziq Hidzmi bin Saipol Azmi
+2. Muhammad Uwais bin Mohd Imran
+3. Sharifah Nur Qistina Nabila binti Syed Abd Rani
+4. Nur Aishah Kamaliah binti Mezlan
 ---
 
 ##  Project Overview
