@@ -1,5 +1,5 @@
 # Oct25_smart_cctv
-a smart CCTV project
+
 
 # Smart Surveillance and Monitoring System (oneM2M-based)
 
