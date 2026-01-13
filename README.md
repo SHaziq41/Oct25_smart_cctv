@@ -3,7 +3,7 @@
 
 # Smart Surveillance and Monitoring System (oneM2M-based)
 
-This project implements a **secure smart surveillance and monitoring system** using IoT devices, the **oneM2M standard (MÖBIUS)**, and **Node-RED**.  
+This project implements a **secure smart surveillance and monitoring system** using IoT devices, the **oneM2M standard (MOBIUS)**, and **Node-RED**.  
 The system focuses on **access-controlled CCTV viewing**, **motion detection**, and **centralized IoT data management**.
 
 ##  Team Members
@@ -63,7 +63,7 @@ CCTV access is **blocked by default** and only unlocked after **admin approval**
 
 ##  oneM2M (MÖBIUS) Usage
 
-MÖBIUS is used as the **oneM2M Common Services Entity (CSE)**.
+MOBIUS is used as the **oneM2M Common Services Entity (CSE)**.
 
 **Resource structure:**
 - Application Entity (AE): `SmartSurveillance`
