@@ -1,0 +1,861 @@
+[
+    {
+        "id": "0143f889c699cbf9",
+        "type": "tab",
+        "label": "Flow 4",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "c590c1444a721e26",
+        "type": "ui_button",
+        "z": "0143f889c699cbf9",
+        "name": "",
+        "group": "950a7173f3953d94",
+        "order": 2,
+        "width": "6",
+        "height": "2",
+        "passthru": false,
+        "label": "Request Access",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "lock_open",
+        "payload": "TRIGGER",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 160,
+        "y": 140,
+        "wires": [
+            [
+                "2023131aa1578962"
+            ]
+        ]
+    },
+    {
+        "id": "5be1c1df1797f348",
+        "type": "ui_text",
+        "z": "0143f889c699cbf9",
+        "group": "950a7173f3953d94",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Current status:",
+        "format": "{{msg.payload.status}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 700,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "c67b5c659d7f81d4",
+        "type": "ui_text",
+        "z": "0143f889c699cbf9",
+        "group": "d3632a98fb90467d",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Incoming Request from:",
+        "format": "{{msg.payload.user}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 750,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "cf5bc3a0ee101341",
+        "type": "ui_button",
+        "z": "0143f889c699cbf9",
+        "name": "",
+        "group": "d3632a98fb90467d",
+        "order": 1,
+        "width": "6",
+        "height": "2",
+        "passthru": false,
+        "label": "Approve",
+        "tooltip": "",
+        "color": "Green",
+        "bgcolor": "",
+        "className": "",
+        "icon": "check_circle",
+        "payload": "APPROVED",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 140,
+        "y": 260,
+        "wires": [
+            [
+                "d3d8a20ab3efd0c7",
+                "abc2bd0b30021c8b"
+            ]
+        ]
+    },
+    {
+        "id": "f90184413f2e02a0",
+        "type": "http in",
+        "z": "0143f889c699cbf9",
+        "name": "",
+        "url": "/motion-alert",
+        "method": "post",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 470,
+        "y": 680,
+        "wires": [
+            [
+                "12963a31b9a40bd0"
+            ]
+        ]
+    },
+    {
+        "id": "12963a31b9a40bd0",
+        "type": "ui_toast",
+        "z": "0143f889c699cbf9",
+        "position": "top right",
+        "displayTime": "6",
+        "highlight": "",
+        "sendall": true,
+        "outputs": 0,
+        "ok": "OK",
+        "cancel": "",
+        "raw": false,
+        "className": "",
+        "topic": "Security Alert",
+        "name": "Motion Notification",
+        "x": 1010,
+        "y": 660,
+        "wires": []
+    },
+    {
+        "id": "baea6720b07852cd",
+        "type": "ui_button",
+        "z": "0143f889c699cbf9",
+        "name": "",
+        "group": "d3632a98fb90467d",
+        "order": 2,
+        "width": "6",
+        "height": "2",
+        "passthru": false,
+        "label": "Deny",
+        "tooltip": "",
+        "color": "Red",
+        "bgcolor": "",
+        "className": "",
+        "icon": "block",
+        "payload": "DENIED",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 150,
+        "y": 420,
+        "wires": [
+            [
+                "d3d8a20ab3efd0c7",
+                "c2fe94546c6c2c32"
+            ]
+        ]
+    },
+    {
+        "id": "d3d8a20ab3efd0c7",
+        "type": "ui_template",
+        "z": "0143f889c699cbf9",
+        "group": "950a7173f3953d94",
+        "name": "Secure Video",
+        "order": 4,
+        "width": "6",
+        "height": "4",
+        "format": "<div ng-if=\"msg.payload == 'APPROVED' || msg.payload.status == 'Access Granted'\">\n    <div\n        style=\"background-color: #000; border: 2px solid #00ff00; padding: 10px; border-radius: 10px; text-align: center;\">\n        <p style=\"color: #00ff00; font-weight: 800; text-transform: uppercase; margin-bottom: 10px;\">\n            <i class=\"fa fa-video-camera\"></i> LIVE FEED: AUTHORIZED\n        </p>\n\n        <img src=\"http://172.20.10.4:81/stream\"\n             style=\"width: 100%; height: auto; border-radius: 5px;\"\n             onerror=\"this.parentElement.innerHTML='<p style=color:red;>⚠️ CAMERA STREAM OFFLINE<br><small>Check IP 172.20.10.4:81</small></p>'\">\n\n        <p style=\"color: #666; font-size: 10px; margin-top: 5px;\">Source: http://172.20.10.4:81/stream</p>\n    </div>\n</div>\n\n<div ng-if=\"msg.payload == 'DENIED' || msg.payload.status == 'Access Denied'\">\n    <div\n        style=\"background-color: rgba(255, 0, 0, 0.1); border: 4px solid #ff4444; padding: 40px; text-align: center; border-radius: 15px;\">\n        <h1 style=\"color: #ff4444; font-size: 40px; margin-bottom: 10px;\">🛑 ACCESS DENIED</h1>\n        <p style=\"color: #ffffff; opacity: 0.8;\">The administrator has blocked this request.</p>\n    </div>\n</div>\n\n<div\n    ng-if=\"msg.payload.status != 'Access Granted' && msg.payload != 'APPROVED' && msg.payload != 'DENIED' && msg.payload.status != 'Access Denied'\">\n    <div\n        style=\"background-color: rgba(44, 62, 80, 0.9); color: white; padding: 50px 20px; text-align: center; border-radius: 15px; border: 2px dashed #4facfe;\">\n        <h2 style=\"font-weight: 800; color: #4facfe; margin-bottom: 15px;\">🔒 FEED ENCRYPTED</h2>\n        <div style=\"font-size: 40px; margin-bottom: 15px;\">📡</div>\n        <p>Waiting for Admin Authorization...</p>\n        <p style=\"color: #8892b0; font-size: 12px;\">Please click 'Request Access' to view live feed.</p>\n    </div>\n</div>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 420,
+        "y": 360,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "194f4d9fbd1ba416",
+        "type": "ui_text_input",
+        "z": "0143f889c699cbf9",
+        "name": "",
+        "label": "Enter Your Name:",
+        "tooltip": "",
+        "group": "950a7173f3953d94",
+        "order": 5,
+        "width": "0",
+        "height": "0",
+        "passthru": true,
+        "mode": "text",
+        "delay": "0",
+        "topic": "topic",
+        "sendOnBlur": true,
+        "className": "",
+        "topicType": "msg",
+        "x": 1010,
+        "y": 320,
+        "wires": [
+            [
+                "887beb11fc826ba3"
+            ]
+        ]
+    },
+    {
+        "id": "887beb11fc826ba3",
+        "type": "change",
+        "z": "0143f889c699cbf9",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "username",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1230,
+        "y": 320,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "2023131aa1578962",
+        "type": "function",
+        "z": "0143f889c699cbf9",
+        "name": "Prepare Request Data",
+        "func": "// 1. Get the username\nvar user = flow.get(\"username\");\n\n// 2. SAFETY CHECK: If the user forgot to type a name\nif (!user || user === \"\") {\n    node.warn(\"User forgot to enter a name\");\n    msg.payload = \"Please enter your name first!\";\n    // Return null to stop the flow here so it doesn't crash Firestore\n    return null; \n}\n\n// 3. Construct the Payload for the Dashboard\nmsg.payload = {\n    name: user,\n    status: \"Checking Database...\"\n};\n\n// 4. Tell Firestore which specific file to look for\nmsg.document = String(user); \n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 380,
+        "y": 140,
+        "wires": [
+            [
+                "fafc3b719eaef592",
+                "5be1c1df1797f348"
+            ]
+        ]
+    },
+    {
+        "id": "f6ee9945839b34d7",
+        "type": "Firestore out",
+        "z": "0143f889c699cbf9",
+        "name": "",
+        "collection": "access_requests",
+        "document": "",
+        "operation": "add",
+        "admin": "717be7c080048549",
+        "eject": false,
+        "x": 1380,
+        "y": 140,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "fafc3b719eaef592",
+        "type": "Firestore in",
+        "z": "0143f889c699cbf9",
+        "name": "",
+        "collection": "allowed_users",
+        "group": false,
+        "document": "",
+        "realtime": false,
+        "query": [],
+        "admin": "717be7c080048549",
+        "snapHandler": "",
+        "eject": false,
+        "x": 660,
+        "y": 140,
+        "wires": [
+            [
+                "550b710d06e8a683"
+            ]
+        ]
+    },
+    {
+        "id": "bc4f88ea0a05baa7",
+        "type": "function",
+        "z": "0143f889c699cbf9",
+        "name": "Format for DB Write",
+        "func": "var user = flow.get(\"username\");\nmsg.collection = \"access_requests\"; // Destination folder\nmsg.payload = {\n    user: user,\n    status: \"Waiting Approval From Admin\",\n    time: new Date().toString()\n};\n\n// ADD THIS LINE: Unlock the Approve button\nmsg.enabled = true;\nreturn msg;",
+        "outputs": 1,
+        "timeout": "1",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1100,
+        "y": 140,
+        "wires": [
+            [
+                "f6ee9945839b34d7",
+                "c67b5c659d7f81d4",
+                "5be1c1df1797f348",
+                "cf5bc3a0ee101341"
+            ]
+        ]
+    },
+    {
+        "id": "32a632ddf6417a8a",
+        "type": "ui_toast",
+        "z": "0143f889c699cbf9",
+        "position": "top right",
+        "displayTime": "3",
+        "highlight": "Red",
+        "sendall": true,
+        "outputs": 0,
+        "ok": "OK",
+        "cancel": "",
+        "raw": false,
+        "className": "",
+        "topic": "",
+        "name": "",
+        "x": 1430,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "ce6f6bebc367f138",
+        "type": "change",
+        "z": "0143f889c699cbf9",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"status\": \"User Not Found - Access Denied\"}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 960,
+        "y": 200,
+        "wires": [
+            [
+                "5be1c1df1797f348",
+                "61de8faa7191fd99",
+                "220a973869fbf75e"
+            ]
+        ]
+    },
+    {
+        "id": "abc2bd0b30021c8b",
+        "type": "change",
+        "z": "0143f889c699cbf9",
+        "name": "Set Status Approved",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"status\": \"Access Granted\"}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 420,
+        "y": 260,
+        "wires": [
+            [
+                "5be1c1df1797f348"
+            ]
+        ]
+    },
+    {
+        "id": "c2fe94546c6c2c32",
+        "type": "change",
+        "z": "0143f889c699cbf9",
+        "name": "Set Status Denied",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"status\": \"Access Denied\"}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 410,
+        "y": 440,
+        "wires": [
+            [
+                "5be1c1df1797f348"
+            ]
+        ]
+    },
+    {
+        "id": "017cf60c410c4b65",
+        "type": "inject",
+        "z": "0143f889c699cbf9",
+        "name": "",
+        "props": [
+            {
+                "p": "document",
+                "v": "ali",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 990,
+        "y": 440,
+        "wires": [
+            [
+                "9709927284cea0cd"
+            ]
+        ]
+    },
+    {
+        "id": "9709927284cea0cd",
+        "type": "Firestore in",
+        "z": "0143f889c699cbf9",
+        "name": "",
+        "collection": "allowed_users",
+        "group": false,
+        "document": "",
+        "realtime": false,
+        "query": [],
+        "admin": "717be7c080048549",
+        "snapHandler": "",
+        "eject": false,
+        "x": 1160,
+        "y": 440,
+        "wires": [
+            [
+                "f65ae0492d2ce19b"
+            ]
+        ]
+    },
+    {
+        "id": "f65ae0492d2ce19b",
+        "type": "debug",
+        "z": "0143f889c699cbf9",
+        "name": "debug 2",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1340,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "550b710d06e8a683",
+        "type": "function",
+        "z": "0143f889c699cbf9",
+        "name": "Verify Identity",
+        "func": "// Get the name we originally asked for\nvar requestedName = flow.get(\"username\");\n\n// Get the data the database sent back\nvar databaseData = msg.payload;\n\n// CHECK 1: Did we get any data?\nif (!databaseData) {\n    return [null, msg]; // Go to output 2 (Deny)\n}\n\n// CHECK 2: Is the data actually for the person we asked for?\n// (This fixes the \"Phonebook Error\")\nif (databaseData.hasOwnProperty(requestedName) || msg.payload.exists === true) {\n     return [msg, null]; // Go to output 1 (Approve)\n} else {\n     return [null, msg]; // Go to output 2 (Deny)\n}",
+        "outputs": 2,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 860,
+        "y": 140,
+        "wires": [
+            [
+                "bc4f88ea0a05baa7",
+                "d3d8a20ab3efd0c7"
+            ],
+            [
+                "ce6f6bebc367f138"
+            ]
+        ]
+    },
+    {
+        "id": "61de8faa7191fd99",
+        "type": "change",
+        "z": "0143f889c699cbf9",
+        "name": "Extract Message",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.status",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1210,
+        "y": 240,
+        "wires": [
+            [
+                "32a632ddf6417a8a"
+            ]
+        ]
+    },
+    {
+        "id": "220a973869fbf75e",
+        "type": "change",
+        "z": "0143f889c699cbf9",
+        "name": "Report Block to Admin",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{ \"user\": \"🛑 BLOCKED: \" & $flowContext(\"username\") }",
+                "tot": "jsonata"
+            },
+            {
+                "t": "set",
+                "p": "enabled",
+                "pt": "msg",
+                "to": "false",
+                "tot": "bool"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 680,
+        "y": 540,
+        "wires": [
+            [
+                "c67b5c659d7f81d4",
+                "cf5bc3a0ee101341"
+            ]
+        ]
+    },
+    {
+        "id": "b12871c282151e66",
+        "type": "ui_template",
+        "z": "0143f889c699cbf9",
+        "group": "950a7173f3953d94",
+        "name": "CSS Beautifier",
+        "order": 13,
+        "width": 0,
+        "height": 0,
+        "format": "<style>\n@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap');\n</style>\n\n<style>\n    /* 2. Apply the Font to the whole page */\n    body, h1, h2, h3, h4, p, label, div {\n        font-family: 'Montserrat', sans-serif !important;\n    }\n\n    /* 3. Deep \"Midnight\" Background */\n    body {\n        background: linear-gradient(180deg, #0f2027, #203a43, #2c5364) !important;\n        background-attachment: fixed !important;\n    }\n\n    /* 4. Glass-morphism Cards */\n    .nr-dashboard-cardpanel {\n        background-color: rgba(16, 28, 45, 0.85) !important;\n        border: 1px solid rgba(255, 255, 255, 0.1) !important;\n        border-radius: 12px !important;\n        backdrop-filter: blur(8px);\n        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37) !important;\n    }\n\n    /* 5. Text Colors */\n    .nr-dashboard-cardpanel p, .nr-dashboard-cardpanel h3, .nr-dashboard-cardpanel label {\n        color: #e0e6ed !important;\n        letter-spacing: 0.5px; /* Makes it easier to read */\n    }\n    \n    /* 6. Make Headers Bold */\n    h3 {\n        font-weight: 800 !important;\n        text-transform: uppercase;\n    }\n    \n    /* 7. Button Styling */\n    .md-button {\n        border-radius: 8px !important;\n        font-weight: 600 !important;\n        font-family: 'Montserrat', sans-serif !important;\n    }\n</style>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 120,
+        "y": 540,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "16c53ed4d8e0cf64",
+        "type": "ui_template",
+        "z": "0143f889c699cbf9",
+        "group": "d3632a98fb90467d",
+        "name": "CSS Beautifier",
+        "order": 13,
+        "width": 0,
+        "height": 0,
+        "format": "<style>\n@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap');\n</style>\n\n<style>\n    /* 2. Apply the Font to the whole page */\n    body, h1, h2, h3, h4, p, label, div {\n        font-family: 'Montserrat', sans-serif !important;\n    }\n\n    /* 3. Deep \"Midnight\" Background */\n    body {\n        background: linear-gradient(180deg, #0f2027, #203a43, #2c5364) !important;\n        background-attachment: fixed !important;\n    }\n\n    /* 4. Glass-morphism Cards */\n    .nr-dashboard-cardpanel {\n        background-color: rgba(16, 28, 45, 0.85) !important;\n        border: 1px solid rgba(255, 255, 255, 0.1) !important;\n        border-radius: 12px !important;\n        backdrop-filter: blur(8px);\n        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37) !important;\n    }\n\n    /* 5. Text Colors */\n    .nr-dashboard-cardpanel p, .nr-dashboard-cardpanel h3, .nr-dashboard-cardpanel label {\n        color: #e0e6ed !important;\n        letter-spacing: 0.5px; /* Makes it easier to read */\n    }\n    \n    /* 6. Make Headers Bold */\n    h3 {\n        font-weight: 800 !important;\n        text-transform: uppercase;\n    }\n    \n    /* 7. Button Styling */\n    .md-button {\n        border-radius: 8px !important;\n        font-weight: 600 !important;\n        font-family: 'Montserrat', sans-serif !important;\n    }\n</style>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 300,
+        "y": 540,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "41bea9a9457d574a",
+        "type": "inject",
+        "z": "0143f889c699cbf9",
+        "name": "Inject distance from sensor",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "5",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 200,
+        "y": 660,
+        "wires": [
+            [
+                "c0f343ef541691c1"
+            ]
+        ]
+    },
+    {
+        "id": "c0f343ef541691c1",
+        "type": "http request",
+        "z": "0143f889c699cbf9",
+        "name": "Request Sensor distance",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "http://172.20.10.9:7579/Mobius/Smartsurveillance/alarm/la",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [
+            {
+                "keyType": "other",
+                "keyValue": "X-M2M-RI",
+                "valueType": "other",
+                "valueValue": "12345"
+            },
+            {
+                "keyType": "other",
+                "keyValue": "X-M2M-Origin",
+                "valueType": "other",
+                "valueValue": "S"
+            }
+        ],
+        "x": 210,
+        "y": 740,
+        "wires": [
+            [
+                "ee1607d5f89eb1d0"
+            ]
+        ]
+    },
+    {
+        "id": "ee1607d5f89eb1d0",
+        "type": "function",
+        "z": "0143f889c699cbf9",
+        "name": "function 1",
+        "func": "msg.payload = msg.payload['m2m:cin'].con; \nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 180,
+        "y": 820,
+        "wires": [
+            [
+                "81c3414893bd90d8"
+            ]
+        ]
+    },
+    {
+        "id": "f60922e0cb3bed8f",
+        "type": "switch",
+        "z": "0143f889c699cbf9",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "1",
+                "vt": "num"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 370,
+        "y": 980,
+        "wires": [
+            [
+                "12963a31b9a40bd0",
+                "662d4301bc65ccaa"
+            ]
+        ]
+    },
+    {
+        "id": "5079399ee58bbc5b",
+        "type": "http request",
+        "z": "0143f889c699cbf9",
+        "name": "",
+        "method": "POST",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "http://172.20.10.9:7579/Mobius/Smartsurveillance/alarm",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [
+            {
+                "keyType": "other",
+                "keyValue": "X-M2M-RI",
+                "valueType": "other",
+                "valueValue": "12345"
+            },
+            {
+                "keyType": "other",
+                "keyValue": "X-M2M-Origin",
+                "valueType": "other",
+                "valueValue": "SOrigin"
+            },
+            {
+                "keyType": "other",
+                "keyValue": "Content-Type",
+                "valueType": "other",
+                "valueValue": "application/json;ty=4"
+            }
+        ],
+        "x": 950,
+        "y": 900,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "662d4301bc65ccaa",
+        "type": "change",
+        "z": "0143f889c699cbf9",
+        "name": "Alert Text",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "⚠️ MOTION DETECTED!",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 640,
+        "y": 740,
+        "wires": [
+            [
+                "12963a31b9a40bd0"
+            ]
+        ]
+    },
+    {
+        "id": "81c3414893bd90d8",
+        "type": "rbe",
+        "z": "0143f889c699cbf9",
+        "name": "",
+        "func": "rbe",
+        "gap": "",
+        "start": "",
+        "inout": "out",
+        "septopics": true,
+        "property": "payload",
+        "topi": "topic",
+        "x": 310,
+        "y": 860,
+        "wires": [
+            [
+                "f60922e0cb3bed8f"
+            ]
+        ]
+    },
+    {
+        "id": "950a7173f3953d94",
+        "type": "ui_group",
+        "name": "Home Controls",
+        "tab": "bee5da71c6d9475e",
+        "order": 1,
+        "disp": true,
+        "width": 6,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "d3632a98fb90467d",
+        "type": "ui_group",
+        "name": "Security Center",
+        "tab": "02b56062ab984cdd",
+        "order": 1,
+        "disp": true,
+        "width": 6,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "717be7c080048549",
+        "type": "firebase admin",
+        "name": "MyFirestore"
+    },
+    {
+        "id": "bee5da71c6d9475e",
+        "type": "ui_tab",
+        "name": "User App",
+        "icon": "dashboard",
+        "order": 3,
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "02b56062ab984cdd",
+        "type": "ui_tab",
+        "name": "Admin Panel",
+        "icon": "dashboard",
+        "order": 4,
+        "disabled": false,
+        "hidden": false
+    }
+]
